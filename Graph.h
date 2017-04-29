@@ -9,6 +9,7 @@ using namespace std;
 class Graph {
 public:
 	Graph(int n); // TO DO
+	~Graph();
 	int size(); // TO DO
 	void addLabel(Vertex i, string s); // TO DO
 	void addEdge(Vertex i, Vertex j); // TO DO
@@ -23,12 +24,14 @@ private:
 	map<string,Vertex> labelsToInt;
 	map<Vertex,string> intToLabels;
 	vector<vector<bool>> adj;
+	int n;
+	bool ** adjacencyMatrix;
 };
 
 // TO DO
 // return a list of names that contain friends of friends of person
 // names should not be repeated
-vector<string> recommendFriends(Graph &graph, const string& person);
+//vector<string> recommendFriends(Graph &graph, const string& person);
 
 // COMPLETED
 // read from a text file, the labels (names) to be associate with each vertex (int)
