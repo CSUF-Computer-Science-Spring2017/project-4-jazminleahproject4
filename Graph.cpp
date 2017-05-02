@@ -43,10 +43,18 @@ void Graph::addLabel(Vertex i, string s) {
 // TO DO
 // add an edge between vertices i and j
 void Graph::addEdge(Vertex i, Vertex j) {
-	if (i >= 0 && i < n && j >= 0 && j < n)
+	/*if (i >= 0 && i < n && j >= 0 && j < n)
 	{
 		adjacencyMatrix[i][j] = true;
 		adjacencyMatrix[j][i] = true;
+	}*/
+	if (adjacencyMatrix[i][j] = false)
+	{
+		adjacencyMatrix[i][j] = true;
+		adjacencyMatrix[j][i] = true;
+	}
+	else {
+		return;
 	}
 }
 
@@ -54,15 +62,34 @@ void Graph::addEdge(Vertex i, Vertex j) {
 // return a vector of vertices adjacent to vertex n
 vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	vector<Vertex>adjVertices;
-	for (int i = 0; i < n; i++)
-	{
-		if (adjacencyMatrix[n][i] = true)
+	//vector<Vertex>::iterator vectorIndex = adjVertices.begin();
+	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
+
+		for (int i = 0; i < n; i++)
 		{
-			adjVertices.push_back(i);
-		}
+			if (adjacencyMatrix[n][i] = true)
+			{
+				
+					adjVertices.push_back(i);
+				}
+
+			
+			}
+		
+	
+	
+
+	for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
+		cout << *it << endl;
 	}
 	return adjVertices;
 }
+
+//bool isEdge(Vertex i, Vertex j)
+//{
+//	return adjacencyMatrix[i][j];
+//
+//}
 
 
 // TO DO

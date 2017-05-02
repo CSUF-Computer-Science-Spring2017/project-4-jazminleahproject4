@@ -18,6 +18,8 @@ public:
 	Vertex getVertex(string label); // OPTIONAL: may help your code
 	string getLabel(Vertex n); // OPTIONAL: may help your code
 
+	bool isEdge(Vertex i, Vertex j);
+
 private:
 	// TO DO
 	// member variables and functions to implement the public member functions
