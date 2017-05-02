@@ -43,19 +43,19 @@ void Graph::addLabel(Vertex i, string s) {
 // TO DO
 // add an edge between vertices i and j
 void Graph::addEdge(Vertex i, Vertex j) {
-	/*if (i >= 0 && i < n && j >= 0 && j < n)
-	{
-		adjacencyMatrix[i][j] = true;
-		adjacencyMatrix[j][i] = true;
-	}*/
-	if (adjacencyMatrix[i][j] = false)
+	if (i >= 0 && i < n && j >= 0 && j < n)
 	{
 		adjacencyMatrix[i][j] = true;
 		adjacencyMatrix[j][i] = true;
 	}
-	else {
-		return;
-	}
+	//if (adjacencyMatrix[i][j] = false)
+	//{
+	//	adjacencyMatrix[i][j] = true;
+	//	adjacencyMatrix[j][i] = true;
+	//}
+	//else {
+	//	return;
+	//}
 }
 
 // TO DO
@@ -65,18 +65,14 @@ vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	//vector<Vertex>::iterator vectorIndex = adjVertices.begin();
 	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
 
-		for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
+	{
+		if (adjacencyMatrix[n][i] == true)
 		{
-			if (adjacencyMatrix[n][i] = true)
-			{
-				
-					adjVertices.push_back(i);
-				}
+			adjVertices.push_back(i);
+		}
 
-			
-			}
-		
-	
+	}
 	
 
 	for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
