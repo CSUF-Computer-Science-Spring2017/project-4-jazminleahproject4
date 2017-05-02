@@ -23,7 +23,7 @@ Graph::Graph(int n) {
 // TO DO
 // return the maximum number of vertices
 int Graph::size() {
-	return 0;
+	return n;
 }
 Graph::~Graph()
 {
@@ -43,7 +43,7 @@ void Graph::addLabel(Vertex i, string s) {
 // TO DO
 // add an edge between vertices i and j
 void Graph::addEdge(Vertex i, Vertex j) {
-	if (i >= 0 && i < n && j > 0 && j < n)
+	if (i >= 0 && i < n && j >= 0 && j < n)
 	{
 		adjacencyMatrix[i][j] = true;
 		adjacencyMatrix[j][i] = true;
