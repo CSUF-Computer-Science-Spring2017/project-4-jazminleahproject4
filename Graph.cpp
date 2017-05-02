@@ -11,10 +11,12 @@ Graph::Graph(int n) {
 	for (int i = 0; i < n; i++)
 	{
 		adjacencyMatrix[i] = new bool[n];
+		intToLabels[i] = "needs Label"; // isn't labeled.
 		for (int j = 0; j < n; j++)
 			adjacencyMatrix[i][j] = false;
 	}
-	
+
+	//need to initialize maps!!!!! and use in addLabel
 
 }
 
@@ -34,6 +36,7 @@ Graph::~Graph()
 // give a string label to vertex
 void Graph::addLabel(Vertex i, string s) {
 	//adjacencyMatrix[i] = s;
+	intToLabels[i] = s;
 
 }
 
@@ -50,7 +53,15 @@ void Graph::addEdge(Vertex i, Vertex j) {
 // TO DO
 // return a vector of vertices adjacent to vertex n
 vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
-
+	vector<Vertex>adjVertices;
+	for (int i = 0; i < n; i++)
+	{
+		if (adjacencyMatrix[n][i] = true)
+		{
+			adjVertices.push_back(i);
+		}
+	}
+	return adjVertices;
 }
 
 

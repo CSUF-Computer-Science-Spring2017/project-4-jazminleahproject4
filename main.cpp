@@ -22,17 +22,17 @@ int main() {
 			g.addEdge(0, 2);
 			g.addEdge(1, 0);
 			g.addEdge(2, 0);
-//			vector<Vertex> v = g.getAdjacentVertices(0);
+			vector<Vertex> v = g.getAdjacentVertices(0);
 			if (checkIfEqual<Vertex>(v, { 1, 2 }))
 				cout << "Test Adjacent Vertices passed" << endl;
 			else
 				cout << "Test Adjacent Vertices failed" << endl;
-//			v = g.getAdjacentVertices(1);
+			v = g.getAdjacentVertices(1);
 			if (checkIfEqual<Vertex>(v, { 0}))
 				cout << "Test Adjacent Vertices passed" << endl;
 			else
 				cout << "Test Adjacent Vertices failed" << endl;
-//			v = g.getAdjacentVertices(2);
+			v = g.getAdjacentVertices(2);
 			if (checkIfEqual<Vertex>(v, { 0}))
 				cout << "Test Adjacent Vertices passed" << endl;
 			else
