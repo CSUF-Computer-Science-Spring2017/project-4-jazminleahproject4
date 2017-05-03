@@ -9,19 +9,20 @@ using namespace std;
 
 class Graph {
 public:
-	Graph(int n); // TO DO
-	~Graph();
-	int size(); // TO DO
-	void addLabel(Vertex i, string s); // TO DO
-	void addEdge(Vertex i, Vertex j); // TO DO
+	Graph(int n);
+	~Graph(); 
+	int size();
+	void addLabel(Vertex i, string s); 
+	void addEdge(Vertex i, Vertex j);
 	vector<Vertex> getAdjacentVertices(Vertex n); 
-	// TO DO
-	queue<Vertex> getFriends(vector<Vertex> v);
-	
-//	vector<string> recommendFriends(Graph &graph, const string &person);
 
-	Vertex getVertex(string label); // OPTIONAL: may help your code
-	string getLabel(Vertex n); // OPTIONAL: may help your code
+
+	queue<Vertex> vectorToQueue(vector<Vertex> & v);
+
+	
+
+	Vertex getVertex(string label); 
+	string getLabel(Vertex n); 
 
 	bool isEdge(Vertex i, Vertex j);
 
@@ -40,6 +41,7 @@ private:
 // return a list of names that contain friends of friends of person
 // names should not be repeated
 vector<string> recommendFriends(Graph &graph, const string& person);
+
 
 // COMPLETED
 // read from a text file, the labels (names) to be associate with each vertex (int)

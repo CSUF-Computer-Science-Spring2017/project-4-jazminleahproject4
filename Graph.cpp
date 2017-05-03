@@ -72,9 +72,10 @@ for (Vertex i = 0; i <= size(); i++)
 }
 
 
-// for debugging 
-//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
-//	cout << *it << endl;
+ //for debugging 
+for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
+	cout << getLabel(*it) << endl;
+}
 
 return adjVertices;
 }
@@ -97,17 +98,22 @@ Vertex Graph::getVertex(string label)
 	return labelsToInt[label];
 }
 
-queue<Vertex> Graph::getFriends(vector<Vertex> v)
+//used in recommendFriends
+queue<Vertex> Graph::vectorToQueue(vector<Vertex> & v)
 {
-	queue<Vertex> qFriends;
+	queue<Vertex> queueFromVector;
 
-	for (auto it = v.begin(); it != v.end(); it++)
+	while(!v.empty())
 	{
-		qFriends.push(*it);
+	Vertex vert = v.back();
+	queueFromVector.push(vert);
+	v.pop_back();
+
 	}
 
-	return qFriends;
+	return queueFromVector;
 }
+
 
 
 // TO DO
@@ -116,62 +122,57 @@ queue<Vertex> Graph::getFriends(vector<Vertex> v)
 
 vector<string> recommendFriends(Graph &graph, const string &person)
 {
-
 	queue<Vertex> qFirstFriends;
-	queue<Vertex> qSecondFriends;
-
+	
 	vector<Vertex> friendsFirstOrder;
-	vector<vector<Vertex>> friendsSecondOrder;
+	vector<Vertex> friendsSecondOrderAdj;
+	
+	
+	vector<string> friendsOfFriends;
+
 
 	//get vertex
 	Vertex startingPerson = graph.getVertex(person);
 	// find all friends
 	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
+	//make into queue
+	qFirstFriends = graph.vectorToQueue(friendsFirstOrder);
 
-	/*/push friends into queue THIS IS THE PROBLEM >> vector >> script out of range 
-//for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
- //{
-	//Vertex vfriend = *it;
-	//qFirstFriends.push(vfriend);
-	}
-*/
 	
+	string newFriend;
 
-	//populate a second queque with friends of friends MAYBE A DO WHILE???
-
-	//1. read first queue
-	//2.run getadj verts and put into second queue
-	//3. pop first queue
-	
-	do {
-		//for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
-		{
-			int index =0;
-			friendsSecondOrder[index] = graph.getAdjacentVertices(qFirstFriends.front());
-			index++;
-		qFirstFriends.pop();
-	}
-
-		} while (!qFirstFriends.empty());
-
-	/*while (!qFirstFriends.empty())
+	//gets vector of friends' friends and adds their names to the strign vector
+	while (!qFirstFriends.empty())
 	{
-		qSecondFriends.push(qFirstFriends.front());
-		qFirstFriends.pop();
-	}*/
+		//get friends of one existing friend, 
+		friendsSecondOrderAdj = graph.getAdjacentVertices(qFirstFriends.front());//vector<vertex>
+		
+																				 																	 
+		//for debugging:
+		//for (auto it = friendsSecondOrderAdj.begin(); it != friendsSecondOrderAdj.end(); it++){
+		//cout << graph.getLabel(*it) << endl; }
+																				  //populate vector of names 
+		while (!friendsSecondOrderAdj.empty()) //while friends of a friend vector isnt empty
+		{
+			newFriend = graph.getLabel(friendsSecondOrderAdj.back()); // get name 
+			friendsOfFriends.push_back(newFriend); //add to string vector
+			//maybe add error handling here???
+			
+			
+			friendsSecondOrderAdj.pop_back();
 
+		}
+	
+		qFirstFriends.pop(); //so you can go through the first friends
 
+	}
+ 
+		
+	return friendsOfFriends;
 
-
-	////for debugging:
-	//while (!qSecondFriends.empty())
-	//{
-	//	cout << qSecondFriends.front() << endl;
-	//		qSecondFriends.pop();
-	//}
-	vector<string> fortesting;
-	return fortesting;
 }
+
+
 
 
 // COMPLETED
