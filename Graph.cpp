@@ -62,10 +62,9 @@ void Graph::addEdge(Vertex i, Vertex j) {
 // return a vector of vertices adjacent to vertex n
 vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	vector<Vertex>adjVertices;
-	//vector<Vertex>::iterator vectorIndex = adjVertices.begin();
-	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
 
-	for (int i = 0; i < n; i++)
+
+	for (Vertex i = 0; i <= size(); i++)
 	{
 		if (adjacencyMatrix[n][i] == true)
 		{
@@ -75,8 +74,9 @@ vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	}
 	
 
-	for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
-		cout << *it << endl;
+	// for debugging 
+	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
+	//	cout << *it << endl;
 	}
 	return adjVertices;
 }
