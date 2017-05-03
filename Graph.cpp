@@ -77,7 +77,7 @@ vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	// for debugging 
 	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
 	//	cout << *it << endl;
-	}
+	
 	return adjVertices;
 }
 
