@@ -11,7 +11,7 @@ Graph::Graph(int n) {
 	for (int i = 0; i < n; i++)
 	{
 		adjacencyMatrix[i] = new bool[n];
-		intToLabels[i] = "needs Label"; // isn't labeled.
+		intToLabels[i] = "needs Label"; // isn't labeled
 		for (int j = 0; j < n; j++)
 			adjacencyMatrix[i][j] = false;
 	}
@@ -30,13 +30,17 @@ Graph::~Graph()
 	for (int i = 0; i < n; i++)
 		delete[]adjacencyMatrix[i];
 	delete[] adjacencyMatrix;
+	
 }
 
 // TO DO
 // give a string label to vertex
 void Graph::addLabel(Vertex i, string s) {
-	//adjacencyMatrix[i] = s;
+
 	intToLabels[i] = s;
+
+	//populate labels to int map
+	labelsToInt[s] = i;
 
 }
 
@@ -48,14 +52,7 @@ void Graph::addEdge(Vertex i, Vertex j) {
 		adjacencyMatrix[i][j] = true;
 		adjacencyMatrix[j][i] = true;
 	}
-	//if (adjacencyMatrix[i][j] = false)
-	//{
-	//	adjacencyMatrix[i][j] = true;
-	//	adjacencyMatrix[j][i] = true;
-	//}
-	//else {
-	//	return;
-	//}
+
 }
 
 // TO DO
@@ -67,6 +64,7 @@ vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	for (Vertex i = 0; i <= size(); i++)
 	{
 		if (adjacencyMatrix[n][i] == true)
+	
 		{
 			adjVertices.push_back(i);
 		}
@@ -81,19 +79,75 @@ vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 	return adjVertices;
 }
 
-//bool isEdge(Vertex i, Vertex j)
-//{
-//	return adjacencyMatrix[i][j];
-//
-//}
+//I'm not really sure if we need it but i feel like we might 
+bool Graph::isEdge(Vertex i, Vertex j)
+{
+	return adjacencyMatrix[i][j];
 
+}
+
+//returns label 
+string Graph::getLabel(Vertex n) {
+	return intToLabels[n];
+}
+
+//return int val for label
+Vertex Graph::getVertex(string label)
+{
+	return labelsToInt[label];
+}
+
+queue<Vertex> Graph::getFriends(vector<Vertex> v)
+{
+	queue<Vertex> qFriends;
+
+	for (auto it = v.begin(); it != v.end(); it++)
+	{
+		qFriends.push(*it);
+	}
+
+	return qFriends;
+}
 
 // TO DO
 // return a list of names that contain friends of friends of person
 // names should not be repeated
-//vector<string> recommendFriends(Graph &graph, const string &person) {
-//	return ;
-//}
+
+vector<string> Graph::recommendFriends(Graph &graph, const string &person) {
+	
+	queue<Vertex> qFirstFriends;
+	queue<Vertex> qSecondFriends;
+
+	vector<Vertex> friendsFirstOrder;
+	vector<Vertex> friendsSecondOrder;
+
+	//get vertex
+	Vertex startingPerson = graph.getVertex(person);
+	// find all friends
+	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
+	
+	//push friends into queue
+	qFirstFriends = graph.getFriends(friendsFirstOrder);
+	/*for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+	{
+		qFirstFriends.push(*it);
+	}*/
+
+	//populate a second queque with friends of friends
+	while (!qFirstFriends.empty())
+	{
+		qSecondFriends.push(qFirstFriends.front());
+		qFirstFriends.pop();
+	}
+	//for debugging:
+	while (!qSecondFriends.empty())
+	{
+		cout << qSecondFriends.front() << endl;
+			qSecondFriends.pop();
+	}
+	vector<string> fortesting;
+	return fortesting;
+}
 
 
 // COMPLETED

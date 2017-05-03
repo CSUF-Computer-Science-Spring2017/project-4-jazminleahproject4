@@ -38,20 +38,20 @@ int main() {
 			else
 				cout << "Test Adjacent Vertices failed" << endl;
 		}
-		//{
-		//	Graph g(10); // build a social network graph
-		//	readFriendsFromFile(g, "friends10.txt");
-		//	readNamesFromFile(g, "names10.txt");
-		//	string name = "Jonathan";
-		//	cout << "\tFriend recommendations for " << name << ":" << endl;
-		//	vector<string> persons = recommendFriends(g, name);
-		//	for (unsigned i = 0; i < persons.size(); i++)
-		//		cout << "\t" << persons[i] << endl;
-		//	if (checkIfEqual<string>(persons, { "Youngeun", "Alfredo"}))
-		//		cout << "Recommendation test passed" << endl;
-		//	else
-		//		cout << "Recommendation test failed" << endl;
-		//}
+		{
+			Graph g(10); // build a social network graph
+			readFriendsFromFile(g, "friends10.txt");
+			readNamesFromFile(g, "names10.txt");
+			string name = "Jonathan";
+			cout << "\tFriend recommendations for " << name << ":" << endl;
+			vector<string> persons = recommendFriends(g, name);
+			for (unsigned i = 0; i < persons.size(); i++)
+				cout << "\t" << persons[i] << endl;
+			if (checkIfEqual<string>(persons, { "Youngeun", "Alfredo"}))
+				cout << "Recommendation test passed" << endl;
+			else
+				cout << "Recommendation test failed" << endl;
+		}
 		//{// A larger example
 		//	Graph g(150); // build a social network graph
 		//	readFriendsFromFile(g, "friends140.txt");

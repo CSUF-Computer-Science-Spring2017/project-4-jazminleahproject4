@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include<queue>
 
 typedef int Vertex;
 using namespace std;
@@ -14,6 +15,8 @@ public:
 	void addLabel(Vertex i, string s); // TO DO
 	void addEdge(Vertex i, Vertex j); // TO DO
 	vector<Vertex> getAdjacentVertices(Vertex); // TO DO
+	queue<Vertex> getFriends(vector<Vertex> v);
+	vector<string> recommendFriends(Graph &graph, const string &person);
 
 	Vertex getVertex(string label); // OPTIONAL: may help your code
 	string getLabel(Vertex n); // OPTIONAL: may help your code
@@ -28,6 +31,7 @@ private:
 	vector<vector<bool>> adj;
 	int n;
 	bool ** adjacencyMatrix;
+
 };
 
 // TO DO
