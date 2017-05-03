@@ -58,25 +58,25 @@ void Graph::addEdge(Vertex i, Vertex j) {
 // TO DO
 // return a vector of vertices adjacent to vertex n
 vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
-	vector<Vertex>adjVertices;
+vector<Vertex>adjVertices;
 
 
-	for (Vertex i = 0; i <= size(); i++)
+for (Vertex i = 0; i <= size(); i++)
+{
+	if (adjacencyMatrix[n][i] == true)
+
 	{
-		if (adjacencyMatrix[n][i] == true)
-	
-		{
-			adjVertices.push_back(i);
-		}
-
+		adjVertices.push_back(i);
 	}
-	
 
-	// for debugging 
-	//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
-	//	cout << *it << endl;
-	
-	return adjVertices;
+}
+
+
+// for debugging 
+//for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
+//	cout << *it << endl;
+
+return adjVertices;
 }
 
 //I'm not really sure if we need it but i feel like we might 
@@ -109,42 +109,66 @@ queue<Vertex> Graph::getFriends(vector<Vertex> v)
 	return qFriends;
 }
 
+
 // TO DO
 // return a list of names that contain friends of friends of person
 // names should not be repeated
 
-vector<string> Graph::recommendFriends(Graph &graph, const string &person) {
-	
+vector<string> recommendFriends(Graph &graph, const string &person)
+{
+
 	queue<Vertex> qFirstFriends;
 	queue<Vertex> qSecondFriends;
 
 	vector<Vertex> friendsFirstOrder;
-	vector<Vertex> friendsSecondOrder;
+	vector<vector<Vertex>> friendsSecondOrder;
 
 	//get vertex
 	Vertex startingPerson = graph.getVertex(person);
 	// find all friends
 	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
-	
-	//push friends into queue
-	qFirstFriends = graph.getFriends(friendsFirstOrder);
-	/*for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
-	{
-		qFirstFriends.push(*it);
-	}*/
 
-	//populate a second queque with friends of friends
-	while (!qFirstFriends.empty())
+	/*/push friends into queue THIS IS THE PROBLEM >> vector >> script out of range 
+//for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+ //{
+	//Vertex vfriend = *it;
+	//qFirstFriends.push(vfriend);
+	}
+*/
+	
+
+	//populate a second queque with friends of friends MAYBE A DO WHILE???
+
+	//1. read first queue
+	//2.run getadj verts and put into second queue
+	//3. pop first queue
+	
+	do {
+		//for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+		{
+			int index =0;
+			friendsSecondOrder[index] = graph.getAdjacentVertices(qFirstFriends.front());
+			index++;
+		qFirstFriends.pop();
+	}
+
+		} while (!qFirstFriends.empty());
+
+	/*while (!qFirstFriends.empty())
 	{
 		qSecondFriends.push(qFirstFriends.front());
 		qFirstFriends.pop();
-	}
-	//for debugging:
-	while (!qSecondFriends.empty())
-	{
-		cout << qSecondFriends.front() << endl;
-			qSecondFriends.pop();
-	}
+	}*/
+
+
+
+
+	////for debugging:
+	//while (!qSecondFriends.empty())
+	//{
+	//	cout << qSecondFriends.front() << endl;
+	//		qSecondFriends.pop();
+	//}
 	vector<string> fortesting;
 	return fortesting;
 }
