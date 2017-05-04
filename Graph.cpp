@@ -127,6 +127,7 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	vector<Vertex> friendsFirstOrder;
 	vector<Vertex> friendsSecondOrderAdj;
 	
+	map<Vertex, string> mapMutualFriends;
 	
 	vector<string> friendsOfFriends;
 
@@ -165,35 +166,13 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	while (!qFirstFriends.empty())
 	{
-		//get friends of one existing friend, 
-		friendsSecondOrderAdj = graph.getAdjacentVertices(qFirstFriends.front());//vector<vertex>
-
-
-																		
-			newFriend = graph.getLabel(friendsSecondOrderAdj.back());// get name 
-			while (!friendsSecondOrderAdj.empty()) //while friends of a friend vector isnt empty
-			{
-
-			for (auto it = oldFriend.begin(); it != oldFriend.end(); it++)
-			{
-				
-					if (newFriend != *it)
-					{
-						friendsOfFriends.push_back(newFriend); //add to string vector
-					}
-
-			}							   
-
-			friendsSecondOrderAdj.pop_back();
-
-
-		}
+		mapMutualFriends.insert();
 
 		qFirstFriends.pop(); //so you can go through the first friends
 
 	}
 	
-		
+	//fcn that turns map into string vector	
 	return friendsOfFriends;
 
 }
