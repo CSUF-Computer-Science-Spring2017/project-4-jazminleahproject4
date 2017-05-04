@@ -47,7 +47,7 @@ void Graph::addLabel(Vertex i, string s) {
 // TO DO
 // add an edge between vertices i and j
 void Graph::addEdge(Vertex i, Vertex j) {
-	if (i >= 0 && i < n && j >= 0 && j < n)
+	if (i >= 0 && i < n && j > 0 && j < n)
 	{
 		adjacencyMatrix[i][j] = true;
 		adjacencyMatrix[j][i] = true;
@@ -74,7 +74,7 @@ for (Vertex i = 0; i <= size(); i++)
 
  //for debugging 
 for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
-	cout << getLabel(*it) << endl;
+	cout << *it << getLabel(*it) << endl;
 }
 
 return adjVertices;
@@ -130,43 +130,69 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	vector<string> friendsOfFriends;
 
+	string newFriend;
+	vector<string> oldFriend; // for error checking  
+
 
 	//get vertex
 	Vertex startingPerson = graph.getVertex(person);
+	//cout << "vertex for Jonathan is " << startingPerson << endl;
+	
 	// find all friends
 	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
+
+	/*****************************************************************************************************
+
+	ERROR CHECKING
+	*******************************************************************************************************/
+	string alreadyFriendName;
+	
+		for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+		{
+			alreadyFriendName = graph.getLabel(*it);
+			oldFriend.push_back(alreadyFriendName);
+			//cout << "old friend is " << alreadyFriendName;
+		}
+
+
+
+
+	
+	
 	//make into queue
 	qFirstFriends = graph.vectorToQueue(friendsFirstOrder);
 
 	
-	string newFriend;
-
-	//gets vector of friends' friends and adds their names to the strign vector
 	while (!qFirstFriends.empty())
 	{
 		//get friends of one existing friend, 
 		friendsSecondOrderAdj = graph.getAdjacentVertices(qFirstFriends.front());//vector<vertex>
-		
-																				 																	 
-		//for debugging:
-		//for (auto it = friendsSecondOrderAdj.begin(); it != friendsSecondOrderAdj.end(); it++){
-		//cout << graph.getLabel(*it) << endl; }
-																				  //populate vector of names 
-		while (!friendsSecondOrderAdj.empty()) //while friends of a friend vector isnt empty
-		{
-			newFriend = graph.getLabel(friendsSecondOrderAdj.back()); // get name 
-			friendsOfFriends.push_back(newFriend); //add to string vector
-			//maybe add error handling here???
-			
-			
+
+
+																		
+			newFriend = graph.getLabel(friendsSecondOrderAdj.back());// get name 
+			while (!friendsSecondOrderAdj.empty()) //while friends of a friend vector isnt empty
+			{
+
+			for (auto it = oldFriend.begin(); it != oldFriend.end(); it++)
+			{
+				
+					if (newFriend != *it)
+					{
+						friendsOfFriends.push_back(newFriend); //add to string vector
+					}
+
+			}							   
+
 			friendsSecondOrderAdj.pop_back();
 
+
 		}
-	
+
 		qFirstFriends.pop(); //so you can go through the first friends
 
 	}
- 
+	
 		
 	return friendsOfFriends;
 
