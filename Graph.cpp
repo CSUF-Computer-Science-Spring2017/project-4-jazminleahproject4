@@ -123,9 +123,11 @@ queue<Vertex> Graph::vectorToQueue(vector<Vertex> & v)
 vector<string> recommendFriends(Graph &graph, const string &person)
 {
 	queue<Vertex> qFirstFriends;
+	queue<Vertex> qTempSecondFriends;
 	
 	vector<Vertex> friendsFirstOrder;
 	vector<Vertex> friendsSecondOrderAdj;
+	vector<Vertex> mapVertices;
 	
 	map<Vertex, string> mapMutualFriends;
 	
@@ -133,6 +135,8 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 
 	string newFriend;
 	vector<string> oldFriend; // for error checking  
+	Vertex secondFriend; // for map
+	
 
 
 	//get vertex
@@ -162,14 +166,47 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	//make into queue
 	qFirstFriends = graph.vectorToQueue(friendsFirstOrder);
-
+	
+	string labelSecondFriend;
+	Vertex vertexSecondFriend;
+	
 	
 	while (!qFirstFriends.empty())
 	{
-		mapMutualFriends.insert();
+		friendsSecondOrderAdj = graph.getAdjacentVertices(qFirstFriends.front());
+		qTempSecondFriends = graph.vectorToQueue(friendsSecondOrderAdj);
+		
+		while (!qTempSecondFriends.empty())
+		{
+			vertexSecondFriend = qTempSecondFriends.front();
+			labelSecondFriend = graph.getLabel(qTempSecondFriends.front());
+
+			mapMutualFriends.emplace(vertexSecondFriend, labelSecondFriend);
+			mapVertices.push_back(vertexSecondFriend);
+
+			qTempSecondFriends.pop();
+		}
 
 		qFirstFriends.pop(); //so you can go through the first friends
 
+	}
+	Vertex searchVertex;
+	
+	//while (!mapMutualFriends.empty())
+	while (!mapVertices.empty())
+	{
+	searchVertex = mapVertices.back();
+	map<Vertex, string>::iterator it;
+	it = mapMutualFriends.find(searchVertex);
+
+	cout << "the FOF is " << mapMutualFriends.find(searchVertex)->second << endl;
+
+	mapVertices.pop_back();
+
+
+
+
+		
 	}
 	
 	//fcn that turns map into string vector	
