@@ -15,9 +15,6 @@ Graph::Graph(int n) {
 		for (int j = 0; j < n; j++)
 			adjacencyMatrix[i][j] = false;
 	}
-
-	//need to initialize maps!!!!! and use in addLabel
-
 }
 
 // TO DO
@@ -114,6 +111,26 @@ queue<Vertex> Graph::vectorToQueue(vector<Vertex> & v)
 	return queueFromVector;
 }
 
+//might need this but I'm not sure 
+//queue<string>Graph::errorCheckQueue(vector<Vertex> & v)
+//{
+//	/*****************************************************************************************************
+//	ERROR CHECKING
+//	*******************************************************************************************************/
+//	string alreadyFriendName;
+//	//tring startingprson = graph.getLabel(startingPerson);
+//	//ldFriend.push_back(startingprson);
+//	for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+//	{
+//		alreadyFriendName = graph.getLabel(*it);
+//
+//		oldFriend.push_back(alreadyFriendName);
+//		//cout << "old friend is " << alreadyFriendName << *it << endl;
+//	}
+//
+//
+//}
+
 
 
 // TO DO
@@ -127,7 +144,7 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	vector<Vertex> friendsFirstOrder;
 	vector<Vertex> friendsSecondOrderAdj;
-	vector<Vertex> mapVertices;
+	queue<Vertex> mapVertices;
 	
 	map<Vertex, string> mapMutualFriends;
 	
@@ -145,23 +162,19 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	// find all friends
 	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
-
 	/*****************************************************************************************************
-
 	ERROR CHECKING
 	*******************************************************************************************************/
 	string alreadyFriendName;
-	
-		for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
-		{
-			alreadyFriendName = graph.getLabel(*it);
-			oldFriend.push_back(alreadyFriendName);
-			//cout << "old friend is " << alreadyFriendName;
-		}
-
-
-
-
+//tring startingprson = graph.getLabel(startingPerson);
+//ldFriend.push_back(startingprson);
+	for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
+	{
+		alreadyFriendName = graph.getLabel(*it);
+		
+		oldFriend.push_back(alreadyFriendName);
+//cout << "old friend is " << alreadyFriendName << *it << endl;
+	}
 	
 	
 	//make into queue
@@ -169,44 +182,61 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	string labelSecondFriend;
 	Vertex vertexSecondFriend;
+	queue<Vertex> qVertexSecondFriend;
 	
 	
 	while (!qFirstFriends.empty())
 	{
+		//get friends of each person in queue, returns vector of mutual friends 
 		friendsSecondOrderAdj = graph.getAdjacentVertices(qFirstFriends.front());
-		qTempSecondFriends = graph.vectorToQueue(friendsSecondOrderAdj);
-		
+		for (auto it = friendsSecondOrderAdj.begin(); it != friendsSecondOrderAdj.end(); it++)
+		{
+		qTempSecondFriends.push(*it);
+		}
+		//queue of vertices of mutual friends
+
+		//now populate mutualfriends map
 		while (!qTempSecondFriends.empty())
 		{
 			vertexSecondFriend = qTempSecondFriends.front();
-			labelSecondFriend = graph.getLabel(qTempSecondFriends.front());
+			labelSecondFriend = graph.getLabel(vertexSecondFriend);
+			for (auto iterator = oldFriend.begin(); iterator != oldFriend.end(); iterator++)
+			{
 
-			mapMutualFriends.emplace(vertexSecondFriend, labelSecondFriend);
-			mapVertices.push_back(vertexSecondFriend);
-
+				if (labelSecondFriend == *iterator)
+				{
+					break;
+				}
+				else {
+					mapMutualFriends.emplace(vertexSecondFriend, labelSecondFriend);
+					mapVertices.push(vertexSecondFriend);
+				}
+				
+			}
 			qTempSecondFriends.pop();
 		}
 
 		qFirstFriends.pop(); //so you can go through the first friends
 
 	}
+	//for debugging print you map
+	map<Vertex, string>::iterator iter;
+	for (iter = mapMutualFriends.begin(); iter != mapMutualFriends.end(); iter++)
+	{
+		cout << "key: " << iter->first << " value: " << iter->second << endl;
+	}
+
+
 	Vertex searchVertex;
 	
 	//while (!mapMutualFriends.empty())
 	while (!mapVertices.empty())
 	{
-	searchVertex = mapVertices.back();
+	searchVertex = mapVertices.front();
 	map<Vertex, string>::iterator it;
 	it = mapMutualFriends.find(searchVertex);
 
-	cout << "the FOF is " << mapMutualFriends.find(searchVertex)->second << endl;
-
-	mapVertices.pop_back();
-
-
-
-
-		
+	mapVertices.pop();		
 	}
 	
 	//fcn that turns map into string vector	

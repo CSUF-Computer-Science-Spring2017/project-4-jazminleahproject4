@@ -18,6 +18,8 @@ public:
 
 
 	queue<Vertex> vectorToQueue(vector<Vertex> & v);
+	queue<string> errorCheckQueue(vector<Vertex> & v);
+	
 
 	
 
