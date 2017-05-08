@@ -52,20 +52,20 @@ int main() {
 			else
 				cout << "Recommendation test failed" << endl;
 		}
-		//{// A larger example
-		//	Graph g(150); // build a social network graph
-		//	readFriendsFromFile(g, "friends140.txt");
-		//	readNamesFromFile(g, "names143.txt");
-		//	string name = "Jonathan";
-		//	cout << "\tFriend recommendations for " << name << ":" << endl;
-		//	vector<string> persons = recommendFriends(g, name);
-		//	for (unsigned i = 0; i < persons.size(); i++)
-		//		cout << "\t" << persons[i] << endl;
-		//	if (checkIfEqual<string>(persons, { "Alfredo", "Rakan", "Derek", "Julian", "Jackie", "Samrah", "Ryan", "Khadijah", "Alexandra", "Qiyuan", "Andrea", "Christopher" }))
-		//		cout << "Recommendation test (large graph) passed" << endl;
-		//	else
-		//		cout << "Recommendation test (large graph) failed" << endl;
-		//}
+		{// A larger example
+			Graph g(150); // build a social network graph
+			readFriendsFromFile(g, "friends140.txt");
+			readNamesFromFile(g, "names143.txt");
+			string name = "Jonathan";
+			cout << "\tFriend recommendations for " << name << ":" << endl;
+			vector<string> persons = recommendFriends(g, name);
+			for (unsigned i = 0; i < persons.size(); i++)
+				cout << "\t" << persons[i] << endl;
+			if (checkIfEqual<string>(persons, { "Alfredo", "Rakan", "Derek", "Julian", "Jackie", "Samrah", "Ryan", "Khadijah", "Alexandra", "Qiyuan", "Andrea", "Christopher" }))
+				cout << "Recommendation test (large graph) passed" << endl;
+			else
+				cout << "Recommendation test (large graph) failed" << endl;
+		}
 
 	}
 	catch (exception &e) {
