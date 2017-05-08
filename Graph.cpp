@@ -239,6 +239,12 @@ cout << "old friend is " << alreadyFriendName << *it << endl;
 
 	mapVertices.pop();		
 	}
+
+	for (auto it = mapMutualFriends.begin(); it != mapMutualFriends.end(); it++)
+	{
+		friendsOfFriends.push_back(it->second);
+
+	}
 	
 	//fcn that turns map into string vector	
 	return friendsOfFriends;
