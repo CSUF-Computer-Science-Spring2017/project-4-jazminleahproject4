@@ -151,7 +151,7 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	vector<string> friendsOfFriends;
 
 	string newFriend;
-	vector<string> oldFriend; // for error checking  
+	vector<Vertex> oldFriend; // for error checking  
 	Vertex secondFriend; // for map
 	
 
@@ -167,13 +167,13 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	*******************************************************************************************************/
 	string alreadyFriendName;
 //tring startingprson = graph.getLabel(startingPerson);
-//ldFriend.push_back(startingprson);
+	oldFriend.push_back(startingPerson);
 	for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
 	{
-		alreadyFriendName = graph.getLabel(*it);
+	//	alreadyFriendName = graph.getLabel(*it);
 		
-		oldFriend.push_back(alreadyFriendName);
-//cout << "old friend is " << alreadyFriendName << *it << endl;
+		oldFriend.push_back(*it);
+cout << "old friend is " << alreadyFriendName << *it << endl;
 	}
 	
 	
@@ -200,23 +200,24 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 		{
 			vertexSecondFriend = qTempSecondFriends.front();
 			labelSecondFriend = graph.getLabel(vertexSecondFriend);
-			for (auto iterator = oldFriend.begin(); iterator != oldFriend.end(); iterator++)
-			{
-
-				if (labelSecondFriend == *iterator)
-				{
-					break;
-				}
-				else {
-					mapMutualFriends.emplace(vertexSecondFriend, labelSecondFriend);
-					mapVertices.push(vertexSecondFriend);
-				}
-				
-			}
-			qTempSecondFriends.pop();
+			mapMutualFriends.emplace(vertexSecondFriend, labelSecondFriend);
+			mapVertices.push(vertexSecondFriend);
+			
+				qTempSecondFriends.pop();
 		}
 
 		qFirstFriends.pop(); //so you can go through the first friends
+
+	}
+
+
+
+	for (auto iterator = oldFriend.begin(); iterator != oldFriend.end(); iterator++)
+	{
+		map<Vertex, string>::iterator it;
+		it = mapMutualFriends.find(*iterator);
+		mapMutualFriends.erase(*iterator);
+
 
 	}
 	//for debugging print you map

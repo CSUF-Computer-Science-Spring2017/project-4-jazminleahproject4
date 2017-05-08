@@ -10,34 +10,34 @@ bool checkIfEqual(vector<E> actual, vector<E> correct);
 int main() {
 
 	try {
-		{
-			// test basic graph operations
-			const int N = 3;
-			Graph g(N);
-			if (g.size() == N)
-				cout << "Number of vertices test passed" << endl;
-			else
-				cout << "Number of vertices test failed" << endl;
-			g.addEdge(0, 1);
-			g.addEdge(0, 2);
-			g.addEdge(1, 0);
-			g.addEdge(2, 0);
-			vector<Vertex> v = g.getAdjacentVertices(0);
-			if (checkIfEqual<Vertex>(v, { 1, 2 }))
-				cout << "Test Adjacent Vertices passed" << endl;
-			else
-				cout << "Test Adjacent Vertices failed" << endl;
-			v = g.getAdjacentVertices(1);
-			if (checkIfEqual<Vertex>(v, { 0}))
-				cout << "Test Adjacent Vertices passed" << endl;
-			else
-				cout << "Test Adjacent Vertices failed" << endl;
-			v = g.getAdjacentVertices(2);
-			if (checkIfEqual<Vertex>(v, { 0}))
-				cout << "Test Adjacent Vertices passed" << endl;
-			else
-				cout << "Test Adjacent Vertices failed" << endl;
-		}
+		//{
+		//	// test basic graph operations
+		//	const int N = 3;
+		//	Graph g(N);
+		//	if (g.size() == N)
+		//		cout << "Number of vertices test passed" << endl;
+		//	else
+		//		cout << "Number of vertices test failed" << endl;
+		//	g.addEdge(0, 1);
+		//	g.addEdge(0, 2);
+		//	g.addEdge(1, 0);
+		//	g.addEdge(2, 0);
+		//	vector<Vertex> v = g.getAdjacentVertices(0);
+		//	if (checkIfEqual<Vertex>(v, { 1, 2 }))
+		//		cout << "Test Adjacent Vertices passed" << endl;
+		//	else
+		//		cout << "Test Adjacent Vertices failed" << endl;
+		//	v = g.getAdjacentVertices(1);
+		//	if (checkIfEqual<Vertex>(v, { 0}))
+		//		cout << "Test Adjacent Vertices passed" << endl;
+		//	else
+		//		cout << "Test Adjacent Vertices failed" << endl;
+		//	v = g.getAdjacentVertices(2);
+		//	if (checkIfEqual<Vertex>(v, { 0}))
+		//		cout << "Test Adjacent Vertices passed" << endl;
+		//	else
+		//		cout << "Test Adjacent Vertices failed" << endl;
+		//}
 		{
 			Graph g(10); // build a social network graph
 			readFriendsFromFile(g, "friends10.txt");
