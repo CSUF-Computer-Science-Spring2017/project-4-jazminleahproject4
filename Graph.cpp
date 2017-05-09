@@ -3,7 +3,7 @@
 #include <sstream>  // for std::istringstream
 #include "Graph.h"
 
-// TO DO
+
 // initialize an undirected graph that can store at most n vertices
 Graph::Graph(int n) {
 	this->n = n;
@@ -11,13 +11,13 @@ Graph::Graph(int n) {
 	for (int i = 0; i < n; i++)
 	{
 		adjacencyMatrix[i] = new bool[n];
-		intToLabels[i] = "needs Label"; // isn't labeled
+		intToLabels[i] = "needs Label"; // for error checking
 		for (int j = 0; j < n; j++)
 			adjacencyMatrix[i][j] = false;
 	}
 }
 
-// TO DO
+
 // return the maximum number of vertices
 int Graph::size() {
 	return n;
@@ -30,7 +30,7 @@ Graph::~Graph()
 	
 }
 
-// TO DO
+
 // give a string label to vertex
 void Graph::addLabel(Vertex i, string s) {
 
@@ -41,7 +41,7 @@ void Graph::addLabel(Vertex i, string s) {
 
 }
 
-// TO DO
+
 // add an edge between vertices i and j
 void Graph::addEdge(Vertex i, Vertex j) {
 	if (i >= 0 && i < n && j > 0 && j < n)
@@ -52,7 +52,7 @@ void Graph::addEdge(Vertex i, Vertex j) {
 
 }
 
-// TO DO
+
 // return a vector of vertices adjacent to vertex n
 vector<Vertex> Graph::getAdjacentVertices(Vertex n) {
 vector<Vertex>adjVertices;
@@ -68,23 +68,17 @@ for (Vertex i = 0; i <= size(); i++)
 
 }
 
-
- //for debugging 
-for (auto it = adjVertices.begin(); it != adjVertices.end(); it++) {
-	cout << *it << getLabel(*it) << endl;
-}
-
 return adjVertices;
 }
 
-//I'm not really sure if we need it but i feel like we might 
+// returns if two vertices are friends
 bool Graph::isEdge(Vertex i, Vertex j)
 {
 	return adjacencyMatrix[i][j];
 
 }
 
-//returns label 
+
 string Graph::getLabel(Vertex n) {
 	return intToLabels[n];
 }
@@ -95,7 +89,7 @@ Vertex Graph::getVertex(string label)
 	return labelsToInt[label];
 }
 
-//used in recommendFriends
+//used in recommendFriends, turns a vector into a queue
 queue<Vertex> Graph::vectorToQueue(vector<Vertex> & v)
 {
 	queue<Vertex> queueFromVector;
@@ -111,29 +105,8 @@ queue<Vertex> Graph::vectorToQueue(vector<Vertex> & v)
 	return queueFromVector;
 }
 
-//might need this but I'm not sure 
-//queue<string>Graph::errorCheckQueue(vector<Vertex> & v)
-//{
-//	/*****************************************************************************************************
-//	ERROR CHECKING
-//	*******************************************************************************************************/
-//	string alreadyFriendName;
-//	//tring startingprson = graph.getLabel(startingPerson);
-//	//ldFriend.push_back(startingprson);
-//	for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
-//	{
-//		alreadyFriendName = graph.getLabel(*it);
-//
-//		oldFriend.push_back(alreadyFriendName);
-//		//cout << "old friend is " << alreadyFriendName << *it << endl;
-//	}
-//
-//
-//}
 
 
-
-// TO DO
 // return a list of names that contain friends of friends of person
 // names should not be repeated
 
@@ -162,29 +135,25 @@ vector<string> recommendFriends(Graph &graph, const string &person)
 	
 	// find all friends
 	friendsFirstOrder = graph.getAdjacentVertices(startingPerson);
-	/*****************************************************************************************************
-	ERROR CHECKING
-	*******************************************************************************************************/
+
+	//error checking so that original person and people who are already
+	//friends are not included in friend of friends
 	string alreadyFriendName;
-//tring startingprson = graph.getLabel(startingPerson);
-	oldFriend.push_back(startingPerson);
+	oldFriend.push_back(startingPerson); //vector of old friends for error checking
 	for (auto it = friendsFirstOrder.begin(); it != friendsFirstOrder.end(); it++)
 	{
-	//	alreadyFriendName = graph.getLabel(*it);
-		
 		oldFriend.push_back(*it);
-cout << "old friend is " << alreadyFriendName << *it << endl;
 	}
 	
 	
-	//make into queue
+	//put existing friends into queue
 	qFirstFriends = graph.vectorToQueue(friendsFirstOrder);
 	
 	string labelSecondFriend;
 	Vertex vertexSecondFriend;
 	queue<Vertex> qVertexSecondFriend;
 	
-	
+	//iterate through queue of existing friends and add their friends to second queue
 	while (!qFirstFriends.empty())
 	{
 		//get friends of each person in queue, returns vector of mutual friends 
@@ -193,9 +162,8 @@ cout << "old friend is " << alreadyFriendName << *it << endl;
 		{
 		qTempSecondFriends.push(*it);
 		}
-		//queue of vertices of mutual friends
 
-		//now populate mutualfriends map
+		//put friends of friends from queue into a map 
 		while (!qTempSecondFriends.empty())
 		{
 			vertexSecondFriend = qTempSecondFriends.front();
@@ -211,7 +179,7 @@ cout << "old friend is " << alreadyFriendName << *it << endl;
 	}
 
 
-
+	// check for old friends and delete if found
 	for (auto iterator = oldFriend.begin(); iterator != oldFriend.end(); iterator++)
 	{
 		map<Vertex, string>::iterator it;
@@ -220,13 +188,7 @@ cout << "old friend is " << alreadyFriendName << *it << endl;
 
 
 	}
-	//for debugging print you map
-	map<Vertex, string>::iterator iter;
-	for (iter = mapMutualFriends.begin(); iter != mapMutualFriends.end(); iter++)
-	{
-		cout << "key: " << iter->first << " value: " << iter->second << endl;
-	}
-
+	
 
 	Vertex searchVertex;
 	
